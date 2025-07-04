@@ -1,0 +1,26 @@
+.hero-text {
+  opacity: 0;
+  animation: fadeInUp 1.2s ease-out forwards;
+}
+
+.moreInfoBtn {
+  border-radius: 25px;
+  background-color: #205078;
+  border-color: #205078;
+}
+
+.moreInfoBtn:hover {
+  background-color: #1b4261;
+  border-color: #1b4261;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
