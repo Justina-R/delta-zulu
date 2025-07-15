@@ -19,7 +19,7 @@ const Courses = () => {
       {/* Presentación */}
       <section className="bg-white py-5">
         <Container>
-          <h2 className="text-center mb-3 fs-3">
+          <h2 className="text-center mb-3 fs-2">
             Formación profesional para futuros pilotos
           </h2>
           <p className="lead text-center fs-4">
@@ -57,9 +57,13 @@ const Courses = () => {
                 <div className="flex-grow-1">
                   <h5 className="mb-2">Piloto Privado de Avión</h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -68,9 +72,13 @@ const Courses = () => {
                 <div className="flex-grow-1">
                   <h5 className="mb-2">Piloto Comercial de Avión</h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -79,9 +87,13 @@ const Courses = () => {
                 <div className="flex-grow-1">
                   <h5 className="mb-2">Piloto Aeroaplicador</h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -94,9 +106,13 @@ const Courses = () => {
                 <div className="flex-grow-1">
                   <h5 className="mb-2">Piloto Instructor de Vuelo</h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -108,9 +124,13 @@ const Courses = () => {
                     Instrumento (ETVI)
                   </h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -121,9 +141,13 @@ const Courses = () => {
                     Habilitación de Vuelo por Instrumento (HVI)
                   </h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
             <Col xs={12} md={10} className="mx-auto px-3">
@@ -132,9 +156,13 @@ const Courses = () => {
                 <div className="flex-grow-1">
                   <h5 className="mb-2">Habilitación VFR Controlado</h5>
                 </div>
-                <Button className="btn-mas-info">
-                  Más información <span className="ms-1">→</span>
-                </Button>
+                <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado."
+                  className="btn-mas-info"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="ms-1">→</span>
+                </a>
               </Card>
             </Col>
           </Row>

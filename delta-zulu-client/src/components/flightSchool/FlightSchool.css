@@ -22,7 +22,7 @@
 }
 
 .hero-title-escuela {
-  font-size: 3.3rem;
+  font-size: 4rem;
   z-index: 2;
   color: white;
   text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
@@ -38,6 +38,10 @@
 
 li {
   list-style-type: none
+}
+
+.odd-section {
+  background-color: #dcdbdbbb;
 }
 
 @keyframes fadeInUp {

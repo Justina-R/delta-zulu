@@ -26,7 +26,7 @@ const WelcomeImage = () => {
         <p style={{ fontSize: "clamp(1rem, 2.5vw, 1.5rem)" }}>
           Tu escuela de vuelo en Las Parejas, Santa Fe
         </p>
-        <Button className="moreInfoBtn fs-5">¡Quiero saber más!</Button>
+        <Button href="/cursos" className="moreInfoBtn fs-5">¡Quiero saber más!</Button>
       </div>
     </div>
   );

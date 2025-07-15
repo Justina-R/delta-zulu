@@ -28,11 +28,11 @@ const Footer = () => {
           <Col xs={12} md={6} className="mb-4 mb-md-0 d-none d-md-block">
             <h5 className="fw-bold">Más información</h5>
             <ul className="list-unstyled">
-              <li><a href="#escuela">Escuela de aviación</a></li>
-              <li><a href="#cursos">Cursos</a></li>
-              <li><a href="#faq">Preguntas frecuentes</a></li>
-              <li><a href="#contacto">Contacto</a></li>
-              <li><a href="#centro">Centro de Entrenamiento</a></li>
+              <li><a href="/escuela">Escuela de aviación</a></li>
+              <li><a href="/cursos">Cursos</a></li>
+              <li><a href="/faq">Preguntas frecuentes</a></li>
+              <li><a href="/contacto">Contacto</a></li>
+              <li><a href="/login">Centro de Entrenamiento</a></li>
             </ul>
           </Col>
         </Row>

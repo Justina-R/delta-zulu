@@ -1,3 +1,7 @@
 .navbar-spacer {
-  height: 9.2rem;
+  height: 9.1rem;
+}
+
+body {
+    font-family: "Montserrat", sans-serif !important;
 }

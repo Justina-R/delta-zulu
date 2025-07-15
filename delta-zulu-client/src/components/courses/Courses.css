@@ -18,18 +18,22 @@
 }
 
 .courses-title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 4rem;
   z-index: 2;
   animation: fadeInUp 1.2s ease-out forwards;
   opacity: 0;
 }
 
 .btn-mas-info {
+  padding: 0.8rem;
   background-color: #205078;
   border-color: #205078;
   color: white;
-  border-radius: 2rem;
+  border-radius: 2rem 0.3rem;
+}
+
+a {
+  text-decoration: none;
 }
 
 .btn-mas-info:hover {

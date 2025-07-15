@@ -1,5 +1,6 @@
 import Header from './header/Header'
 import Footer from './footer/Footer'
+import WhatsAppBtn from '../whatsAppBtn/WhatsAppBtn';
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -8,6 +9,7 @@ const Layout = () => {
       <Header />
       <div className="navbar-spacer" />
       <Outlet />
+      <WhatsAppBtn />
       <Footer />
     </div>
   );

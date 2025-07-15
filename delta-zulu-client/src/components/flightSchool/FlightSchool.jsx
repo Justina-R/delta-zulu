@@ -5,7 +5,7 @@ const FlightSchool = () => {
   return (
     <div>
       {/* Sección 1: Imagen de portada */}
-      <div className="hero-image-escuela d-flex align-items-center justify-content-center">
+      <div className="hero-image-escuela  d-flex align-items-center justify-content-center">
         <h1 className="hero-title-escuela text-center w-100">
           Escuela de Aviación
         </h1>
@@ -43,7 +43,7 @@ const FlightSchool = () => {
       </section>
 
       {/* Sección 3: Avión de aprendizaje */}
-      <section className="bg-light py-5">
+      <section className="py-5 odd-section">
         <Container>
           <Row className="align-items-center flex-md-row-reverse">
             <Col md={6}>
@@ -105,7 +105,7 @@ const FlightSchool = () => {
       </section>
 
       {/* Sección 5: Clases personalizadas */}
-      <section className="bg-light py-5">
+      <section className="py-5 odd-section">
         <Container>
           <Row className="align-items-center flex-md-row-reverse">
             <Col md={6}>

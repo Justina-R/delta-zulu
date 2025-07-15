@@ -24,9 +24,13 @@ const CourseList = () => {
                 Aprendé a volar desde cero con instructores certificados y
                 materiales actualizados.
               </Card.Text>
-              <a href={"#pilotoPrivado"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+              <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -39,9 +43,13 @@ const CourseList = () => {
                 Perfeccioná tus habilidades como piloto profesional y accedé a
                 oportunidades laborales en aerolíneas y empresas privadas.
               </Card.Text>
-              <a href={"#pilotoComercial"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+              <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -54,9 +62,13 @@ const CourseList = () => {
                 Capacitate en operaciones agrícolas aéreas, con énfasis en
                 seguridad, precisión y normativas vigentes.
               </Card.Text>
-              <a href={"#pilotoAgroaplicador"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+             <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -69,9 +81,13 @@ const CourseList = () => {
                 Formate como instructor certificado y transmití tus
                 conocimientos a nuevos aspirantes a piloto.
               </Card.Text>
-              <a href={"#instructorDeVuelo"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+              <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -85,9 +101,13 @@ const CourseList = () => {
                 Convertite en guía especializado en instrucción con simuladores
                 terrestres certificados para vuelo instrumental.
               </Card.Text>
-              <a href={"#ETVI"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+               <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -100,9 +120,13 @@ const CourseList = () => {
                 Aprendé a volar con precisión en condiciones de baja visibilidad
                 utilizando exclusivamente instrumentos de vuelo.
               </Card.Text>
-              <a href={"#VueloPorInstrumento"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+              <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
@@ -115,9 +139,13 @@ const CourseList = () => {
                 Obtené la habilitación para operar en espacios aéreos
                 controlados respetando procedimientos y comunicación ATC.
               </Card.Text>
-              <a href={"#VFR"} className="link-curso">
-                Más información <span className="flecha">→</span>
-              </a>
+              <a
+                  href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado."
+                  className="link-curso"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Más info <span className="flecha">→</span>
+                </a>
             </Card.Body>
           </Card>
         </Col>
