@@ -1,0 +1,26 @@
+.dashboard-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-card {
+  border-radius: 1rem;
+  transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card .btn-primary {
+  background-color: #044b81;
+  border-color: #044b81;
+  border-radius: 2rem;
+  padding: 0.5rem 2rem;
+}
+
+.dashboard-card .btn-primary:hover {
+  background-color: #033b67;
+  border-color: #033b67;
+}

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { FaPlane } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -13,6 +14,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Datos enviados:", form);
+    navigate("/trainingCenter")
     // Aquí iría la lógica de autenticación
   };
 
