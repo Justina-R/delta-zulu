@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "nombre": "Examen de Aerodinámica",
+    "moduloId": 1,
+    "preguntas": [
+      {
+        "texto": "¿Qué fuerza permite que un avión permanezca en vuelo?",
+        "respuestas": [
+          { "texto": "La sustentación", "esCorrecta": true },
+          { "texto": "La gravedad", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué es el ángulo de ataque?",
+        "respuestas": [
+          { "texto": "El ángulo entre ala y viento relativo", "esCorrecta": true },
+          { "texto": "La posición del tren de aterrizaje", "esCorrecta": false }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Examen de Navegación Básica",
+    "moduloId": 2,
+    "preguntas": [
+      {
+        "texto": "¿Qué instrumento indica la altitud?",
+        "respuestas": [
+          { "texto": "Altímetro", "esCorrecta": true },
+          { "texto": "Brújula", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué indica la brújula?",
+        "respuestas": [
+          { "texto": "Rumbo", "esCorrecta": true },
+          { "texto": "Altura", "esCorrecta": false }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Examen de Seguridad Operacional",
+    "moduloId": 3,
+    "preguntas": [
+      {
+        "texto": "¿Qué debe verificarse antes de iniciar una fumigación?",
+        "respuestas": [
+          { "texto": "Condiciones meteorológicas", "esCorrecta": true },
+          { "texto": "Color del avión", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué elemento es obligatorio portar en cabina?",
+        "respuestas": [
+          { "texto": "Radio VHF funcional", "esCorrecta": true },
+          { "texto": "Paraguas", "esCorrecta": false }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nombre": "Examen de Meteorología",
+    "moduloId": 4,
+    "preguntas": [
+      {
+        "texto": "¿Qué nube está asociada a tormentas fuertes?",
+        "respuestas": [
+          { "texto": "Cumulonimbus", "esCorrecta": true },
+          { "texto": "Stratus", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué es una isobara?",
+        "respuestas": [
+          { "texto": "Línea de igual presión", "esCorrecta": true },
+          { "texto": "Línea de igual temperatura", "esCorrecta": false }
+        ]
+      }
+    ]
+  },
+    {
+    "id": 5,
+    "nombre": "Examen de Reglamentación Aeronáutica",
+    "moduloId": 5,
+    "preguntas": [
+      {
+        "texto": "¿Qué organismo regula la aviación en Argentina?",
+        "respuestas": [
+          { "texto": "ANAC", "esCorrecta": true },
+          { "texto": "AFIP", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué documento es obligatorio para volar?",
+        "respuestas": [
+          { "texto": "Licencia vigente", "esCorrecta": true },
+          { "texto": "Pasaporte", "esCorrecta": false }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "nombre": "Examen de Procedimientos de Emergencia",
+    "moduloId": 6,
+    "preguntas": [
+      {
+        "texto": "¿Qué se debe hacer si falla el motor en vuelo?",
+        "respuestas": [
+          { "texto": "Buscar un lugar seguro para aterrizar", "esCorrecta": true },
+          { "texto": "Continuar hasta destino", "esCorrecta": false }
+        ]
+      },
+      {
+        "texto": "¿Qué es prioridad durante una emergencia?",
+        "respuestas": [
+          { "texto": "Mantener el control del avión", "esCorrecta": true },
+          { "texto": "Llamar por teléfono", "esCorrecta": false }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+.editBtn {
+  background-color: #205078;
+  border: none;
+  color: white;
+  border-radius: 20px;
+  margin: 0 0.4rem;
+}
+
+.editBtn:hover {
+  background-color: #1b4261;
+  border-color: #1b4261;
+  color: white;
+}
+
+.backBtn {
+  border: none;
+}
+
+.backBtn:hover {
+  color: rgba(0, 0, 0, 0.518);
+}

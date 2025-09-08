@@ -1,0 +1,9 @@
+.user-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #044b81;
+  color: white;
+  font-weight: bold;
+  border: none;
+}

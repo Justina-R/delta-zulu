@@ -1,0 +1,58 @@
+# === Node & React ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# === Build outputs ===
+/front/build/
+/front/dist/
+/back/dist/
+/back/build/
+/coverage/
+
+# === Env & secrets ===
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# === OS / IDE files ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Logs ===
+logs
+*.log
+*.log.*
+/front/debug.log
+/back/debug.log
+
+# === Cache ===
+/front/.cache/
+/back/.cache/
+/front/.next/
+/back/.next/
+/tmp/
+/.cache/
+/out/
+
+# === Testing ===
+/jest-cache/
+/jest-test-results.json
+/coverage/
+
+# === Others ===
+*.pid
+*.seed
+*.pid.lock

@@ -1,0 +1,33 @@
+.login-container {
+  height: 80vh;
+  font-size: 1.2rem;
+}
+
+.login-image {
+  flex: 1;
+  background-image: url('/images/clases.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-form-container {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 3rem 2rem;
+}
+
+.login-form-container h2 {
+  color: #044b81;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .login-image {
+    display: none;
+  }
+
+  .login-form-container {
+    padding: 2rem;
+    width: 100%;
+  }
+}

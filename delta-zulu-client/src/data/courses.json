@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "nombre": "Curso de Piloto Privado",
+      "descripcion": "Este curso...",
+      "fechaCreacion": "12/03/2025",
+      "fechaActualizacion": "22/05/2025"
+    },
+
+    {
+      "id": 2,
+      "nombre": "Curso de Piloto Aeroaplicador",
+      "descripcion": "Este curso...",
+      "fechaCreacion": "02/10/2023",
+      "fechaActualizacion": "22/05/2024"
+    },
+    {
+      "id": 3,
+      "nombre": "Curso de Piloto Comercial",
+      "descripcion": "Este curso...",
+      "fechaCreacion": "07/03/2024",
+      "fechaActualizacion": "21/02/2025"
+    }
+  ]

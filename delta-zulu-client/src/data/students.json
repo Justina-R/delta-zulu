@@ -1,0 +1,41 @@
+[
+    {
+      "id": 1,
+      "nombre": "Micaela Suárez",
+      "mail": "micaS@gmail.com",
+      "password": "micaS123",
+      "fechaInscripción": "12/02/2025"
+    },
+
+    {
+      "id": 2,
+      "nombre": "Nicolas Martínez",
+      "mail": "nicoM@gmail.com",
+      "password": "nicoM123",
+      "fechaInscripción": "18/03/2025"
+    },
+    {
+      "id": 3,
+      "nombre": "Norma Pérez",
+      "mail": "normaP@gmail.com",
+      "password": "normaP123",
+      "fechaInscripción": "03/10/2024"
+    },
+    {
+      "id": 4,
+      "nombre": "Daniel Gómez",
+      "mail": "daniG@gmail.com",
+      "password": "daniG123",
+      "fechaInscripción": "12/08/2024"
+    },
+    {
+      "id": 5,
+      "nombre": "Luis Mendoza",
+      "mail": "luisM@gmail.com",
+      "password": "luisM123",
+      "fechaInscripción": "22/05/2025"
+    }
+  ]
+
+  
+

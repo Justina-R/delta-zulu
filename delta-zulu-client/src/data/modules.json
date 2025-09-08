@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "nombre": "Introducción a la Aerodinámica",
+    "descripcion": "Este módulo trata...",
+    "videoUrl": "https://www.youtube.com/watch?v=YqxU4ShnEw4",
+    "cursoId": "1"
+  },
+
+  {
+    "id": 2,
+    "nombre": "Reglamentos y Normativas Básicas",
+    "descripcion": "Se explican las normativas principales que debe conocer un piloto privado para operar de manera segura y legal.",
+    "videoUrl": "https://www.youtube.com/watch?v=abc123",
+    "cursoId": "1"
+  },
+  {
+    "id": 3,
+    "nombre": "Técnicas de Aplicación Aérea",
+    "descripcion": "Conceptos fundamentales sobre la correcta aplicación aérea de productos para el agro, cuidando eficiencia y seguridad.",
+    "videoUrl": "https://www.youtube.com/watch?v=def456",
+    "cursoId": "2"
+  },
+  {
+    "id": 4,
+    "nombre": "Instrumentos de Vuelo Avanzados",
+    "descripcion": "Se aborda el uso y funcionamiento de los instrumentos para vuelos comerciales e instrumentales.",
+    "videoUrl": "https://www.youtube.com/watch?v=ghi789",
+    "cursoId": "3"
+  },
+  {
+    "id": 5,
+    "nombre": "Meteorología para Pilotos",
+    "descripcion": "Introducción a los conceptos meteorológicos esenciales para planificar y realizar vuelos seguros.",
+    "videoUrl": "https://www.youtube.com/watch?v=jkl012",
+    "cursoId": "1"
+  },
+  {
+    "id": 6,
+    "nombre": "Seguridad Operacional y Factores Humanos",
+    "descripcion": "Se profundiza en los factores humanos y las buenas prácticas para mantener altos estándares de seguridad en la aviación comercial.",
+    "videoUrl": "https://www.youtube.com/watch?v=mno345",
+    "cursoId": "3"
+  }
+]

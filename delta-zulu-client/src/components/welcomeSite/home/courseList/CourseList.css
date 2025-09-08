@@ -1,0 +1,22 @@
+.card-curso {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-curso:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.link-curso {
+  color: #044b81;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link-curso:hover {
+  text-decoration: underline;
+}
+
+.flecha {
+  font-weight: bold;
+}

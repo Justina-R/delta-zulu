@@ -1,0 +1,14 @@
+.editBtn {
+  padding: 0.5rem;
+  background-color: #205078;
+  border: none;
+  color: white;
+  border-radius: 18px;
+  margin: 0 0.4rem;
+}
+
+.editBtn:hover {
+  background-color: #1b4261;
+  border-color: #1b4261;
+  color: white;
+}
