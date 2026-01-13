@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./examViews.css";
+import "./examView.css";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../../ui/confirmModal";
+import ConfirmModal from "../../../ui/confirmModal";
 
 const ExamViews = ({ onVolver }) => {
   const navigate = useNavigate();

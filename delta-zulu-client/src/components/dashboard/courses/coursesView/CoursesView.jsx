@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Button,
-  Collapse,
-  ListGroup,
-  Modal,
-  Form
-} from "react-bootstrap";
+import { Card, Button, Collapse, ListGroup } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { BsCheck } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
-import ConfirmModal from "../../ui/confirmModal";
+import ConfirmModal from "../../../ui/confirmModal";
 import "./coursesView.css";
 import { useNavigate } from "react-router-dom";
-
+import CourseModal from "../courseModal/CourseModal";
 
 const CoursesView = () => {
   const navigate = useNavigate();
@@ -23,18 +15,19 @@ const CoursesView = () => {
       nombre: "Curso de Piloto Privado",
       modulos: ["Módulo 1", "Módulo 2", "Módulo 3"],
       abierto: false,
-      editando: false
+      editando: false,
     },
     {
       id: 2,
       nombre: "Piloto Comercial de Avión",
       modulos: ["Módulo 1: Introducción", "Módulo 2"],
       abierto: false,
-      editando: false
-    }
+      editando: false,
+    },
   ]);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [nuevoCurso, setNuevoCurso] = useState("");
 
   // Estado para confirmaciones
@@ -42,7 +35,7 @@ const CoursesView = () => {
     show: false,
     title: "",
     message: "",
-    onConfirm: () => {}
+    onConfirm: () => {},
   });
 
   // Abrir/cerrar curso
@@ -52,6 +45,29 @@ const CoursesView = () => {
         curso.id === id ? { ...curso, abierto: !curso.abierto } : curso
       )
     );
+  };
+
+  const handleSaveCourse = (cursoGuardado) => {
+    if (cursoGuardado.id) {
+      // EDITAR EXISTENTE
+      setCursos(
+        cursos.map((c) =>
+          c.id === cursoGuardado.id ? { ...c, nombre: cursoGuardado.nombre } : c
+        )
+      );
+    } else {
+      // CREAR NUEVO
+      const nuevo = {
+        id: Date.now(),
+        nombre: cursoGuardado.nombre,
+        modulos: [],
+        abierto: false,
+      };
+      setCursos([...cursos, nuevo]);
+    }
+
+    setShowCourseModal(false);
+    setSelectedCourse(null);
   };
 
   // Eliminar curso completo
@@ -67,7 +83,7 @@ const CoursesView = () => {
         curso.id === cursoId
           ? {
               ...curso,
-              modulos: curso.modulos.filter((_, i) => i !== index)
+              modulos: curso.modulos.filter((_, i) => i !== index),
             }
           : curso
       )
@@ -104,7 +120,7 @@ const CoursesView = () => {
       nombre: nuevoCurso,
       modulos: [],
       abierto: false,
-      editando: false
+      editando: false,
     };
 
     setCursos([...cursos, nuevo]);
@@ -148,7 +164,13 @@ const CoursesView = () => {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Lista de Cursos</h2>
-        <Button className="editBtn" onClick={() => setShowModal(true)}>
+        <Button
+          className="editBtn"
+          onClick={() => {
+            setSelectedCourse(null);
+            setShowCourseModal(true);
+          }}
+        >
           + Agregar curso
         </Button>
       </div>
@@ -161,31 +183,17 @@ const CoursesView = () => {
             onClick={() => toggleCurso(curso.id)}
           >
             <div className="d-flex align-items-center flex-grow-1">
-              {curso.editando ? (
-                <Form.Control
-                  type="text"
-                  value={curso.nombre}
-                  onChange={(e) =>
-                    cambiarNombreCurso(curso.id, e.target.value)
-                  }
-                  className="me-2"
-                  autoFocus
-                />
-              ) : (
-                <span>{curso.nombre}</span>
-              )}
+              <span>{curso.nombre}</span>
+
               <Button
                 variant="link"
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleEditarCurso(curso.id);
+                  setSelectedCourse(curso); // enviamos el curso al modal
+                  setShowCourseModal(true); // abrimos modal
                 }}
               >
-                {curso.editando ? (
-                  <BsCheck color="black" size={18} />
-                ) : (
-                  <MdEdit color="black" size={18} />
-                )}
+                <MdEdit color="black" size={18} />
               </Button>
               <Button
                 variant="link"
@@ -196,7 +204,7 @@ const CoursesView = () => {
                     show: true,
                     title: "Eliminar curso",
                     message: `¿Seguro que quieres eliminar el curso "${curso.nombre}" y todos sus módulos?`,
-                    onConfirm: () => eliminarCurso(curso.id)
+                    onConfirm: () => eliminarCurso(curso.id),
                   });
                 }}
               >
@@ -233,7 +241,10 @@ const CoursesView = () => {
                             >
                               <span className="flex-grow-1">{modulo}</span>
                               <div>
-                                <Button className="editBtn me-2" onClick={onEditar}>
+                                <Button
+                                  className="editBtn me-2"
+                                  onClick={onEditar}
+                                >
                                   Modificar
                                 </Button>
                                 <Button
@@ -244,7 +255,7 @@ const CoursesView = () => {
                                       title: "Eliminar módulo",
                                       message: `¿Seguro que quieres eliminar "${modulo}" del curso "${curso.nombre}"?`,
                                       onConfirm: () =>
-                                        eliminarModulo(curso.id, index)
+                                        eliminarModulo(curso.id, index),
                                     })
                                   }
                                 >
@@ -274,31 +285,12 @@ const CoursesView = () => {
         </Card>
       ))}
 
-      {/* Modal agregar curso */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar curso</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Título del curso</Form.Label>
-            <Form.Control
-              type="text"
-              value={nuevoCurso}
-              onChange={(e) => setNuevoCurso(e.target.value)}
-              placeholder="Ingrese el título"
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancelar
-          </Button>
-          <Button className="editBtn" onClick={handleCrearCurso}>
-            Crear
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <CourseModal
+        show={showCourseModal}
+        onHide={() => setShowCourseModal(false)}
+        onSave={handleSaveCourse}
+        initialData={selectedCourse}
+      />
 
       {/* Modal de confirmación */}
       <ConfirmModal

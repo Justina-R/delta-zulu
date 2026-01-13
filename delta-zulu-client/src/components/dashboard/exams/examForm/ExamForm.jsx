@@ -79,9 +79,15 @@ const ExamForm = () => {
       setPreguntas(nuevasPreguntas);
     }
   };
+  
+  //Verifica que todos las preguntas hayan sido guardadas antes de salir del editor
+  const verificarCamposGuardados = () => {
+
+  }
 
   const guardarCambios = () => {
     console.log("Datos a enviar:", preguntas);
+    verificarCamposGuardados();
     navigate("/exams");
   };
 

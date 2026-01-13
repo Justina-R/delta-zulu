@@ -1,16 +1,16 @@
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./Header.css";
+import "./LoggedHeader.css";
 
-const Header = ({ userInitial = "J" }) => {
+const LoggedHeader = ({ userInitial = "J" }) => {
   return (
-    <Navbar expand="lg" className="shadow-sm py-3"  style={{ backgroundColor: '#dcdbdb'}}>
+    <Navbar expand="md" fixed="top" className="shadow-sm py-3" style={{ backgroundColor: '#dcdbdb'}}>
       <Container>
-        <Navbar.Brand as={Link} to="/dashboard">
+        <Navbar.Brand as={Link} to="/">
           <img src="/images/delta_zulu.png" alt="Delta Zulu" height="120" />
         </Navbar.Brand>
         <Nav className="ms-auto align-items-center">
-          <Nav.Link as={Link} to="/mis-cursos" className="me-3">
+          <Nav.Link as={Link} to="/myCourses" className="fs-5 me-3">
             Mis cursos
           </Nav.Link>
           <Dropdown align="end">
@@ -35,4 +35,4 @@ const Header = ({ userInitial = "J" }) => {
   );
 };
 
-export default Header;
+export default LoggedHeader;

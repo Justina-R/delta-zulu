@@ -38,10 +38,12 @@ const Header = () => {
           className="order-3"
         >
           <Nav className="ms-auto gap-md-4 text-center text-md-start">
-            <Nav.Link href="/escuela" className="fs-5">Escuela de aviación</Nav.Link>
+            
+            <Nav.Link href="/escuela" className="fs-5">La escuela</Nav.Link>
             <Nav.Link href="/cursos" className="fs-5">Cursos</Nav.Link>
             <Nav.Link href="/faq" className="fs-5">Preguntas frecuentes</Nav.Link>
             <Nav.Link href="/contacto" className="fs-5">Contacto</Nav.Link>
+            <Nav.Link href="/login" className="fs-5">Centro de entrenamiento</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

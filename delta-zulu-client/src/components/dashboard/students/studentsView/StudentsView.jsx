@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { MdEdit } from "react-icons/md";
 import { BsFillTrash3Fill, BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../../ui/confirmModal";
+import ConfirmModal from "../../../ui/confirmModal";
 
 const StudentsView = ({ onEliminar, onVolver }) => {
   const navigate = useNavigate();
