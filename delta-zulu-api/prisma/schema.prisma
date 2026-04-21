@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  attempts  ExamAttempt[]
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  imagenUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  modules     Module[]
+  exams       Exam[]
+}
+
+model Module {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  imagenUrl   String?
+  driveUrl    String?
+  order       Int      @default(0)
+  courseId    Int
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Exam {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  courseId    Int?
+  course      Course?  @relation(fields: [courseId], references: [id])
+  questions   Question[]
+  attempts    ExamAttempt[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  texto     String
+  opciones  String[]
+  correcta  Int
+  examId    Int
+  exam      Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+}
+
+model ExamAttempt {
+  id          Int      @id @default(autoincrement())
+  studentId   Int
+  student     User     @relation(fields: [studentId], references: [id])
+  examId      Int
+  exam        Exam     @relation(fields: [examId], references: [id])
+  score       Float
+  completedAt DateTime @default(now())
+}
