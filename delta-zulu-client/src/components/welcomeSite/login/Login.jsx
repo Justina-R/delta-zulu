@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Datos enviados:", form);
-    navigate("/trainingCenter")
+    navigate("/myCourses")
     // Aquí iría la lógica de autenticación
   };
 

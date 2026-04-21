@@ -16,6 +16,8 @@ import CoursesView from "./components/dashboard/courses/coursesView/CoursesView"
 import StudentForm from "./components/dashboard/students/studentForm/StudentForm";
 import ModuleForm from "./components/dashboard/courses/moduleForm/ModuleForm";
 import MyCourses from "./components/trainingCenter/myCourses/MyCourses";
+import CourseDetail from "./components/trainingCenter/courseDetail/CourseDetail";
+import StudentExamView from "./components/trainingCenter/studentExamView/StudentExamView";
 
 
 function App() {
@@ -34,8 +36,11 @@ function App() {
         <Route path="/examForm" element={<ExamForm/>}/>
         <Route path="/courses" element={<CoursesView/>}/>
         <Route path="/studentForm" element={<StudentForm/>}/>
+        <Route path="/studentForm/:id" element={<StudentForm />} />
         <Route path="/moduleForm" element={<ModuleForm/>}/>
         <Route path="/myCourses" element={<MyCourses/>}/>
+        <Route path="/courseDetail" element={<CourseDetail/>}/>
+        <Route path="/studentExamView" element={<StudentExamView/>}/>
       </Route>
       
     </Routes>
