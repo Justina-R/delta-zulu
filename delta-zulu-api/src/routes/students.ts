@@ -74,6 +74,12 @@ export default async function studentRoutes(fastify: FastifyInstance) {
   fastify.delete('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
     if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
     const { id } = request.params;
+
+    // Borrar intentos de examen asociados
+    await fastify.prisma.examAttempt.deleteMany({
+      where: { studentId: Number(id) }
+    });
+
     await fastify.prisma.user.delete({ where: { id: Number(id) } });
     return { success: true };
   });

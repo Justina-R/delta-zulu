@@ -213,12 +213,12 @@ const styles = {
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const IconChat = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
   </svg>
 );
 const IconPin = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
   </svg>
 );
 
@@ -226,21 +226,21 @@ const contactItems = [
   {
     icon: <FaWhatsapp size={24} />,
     label: "WhatsApp",
-    value: "+54 9 3471 676535",
+    value: "+54 9 3471 200014",
     color: "#25D366",
     accent: "linear-gradient(90deg, #25D366, #128C7E)",
   },
   {
     icon: <FaEnvelope size={24} />,
     label: "Email",
-    value: "info@deltazulu.com.ar",
+    value: "zarantonelloserviciosaereos@gmail.com",
     color: "#205078",
     accent: "linear-gradient(90deg, #205078, #2e7ab0)",
   },
   {
     icon: <FaPhone size={24} />,
     label: "Teléfono",
-    value: "+54 3471 676535",
+    value: "+54 3471 200014",
     color: "#198754",
     accent: "linear-gradient(90deg, #198754, #2da86a)",
   },

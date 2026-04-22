@@ -14,9 +14,22 @@ const fastify = Fastify({
   logger: true
 });
 
+// Global Error Handler
+fastify.setErrorHandler((error, request, reply) => {
+  fastify.log.error(error);
+  reply.status(error.statusCode || 500).send({
+    status: 'error',
+    name: error.name,
+    message: error.message,
+    statusCode: error.statusCode
+  });
+});
+
 // Register Plugins
 fastify.register(cors, {
-  origin: true
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 });
 
 fastify.register(fastifyJwt, {

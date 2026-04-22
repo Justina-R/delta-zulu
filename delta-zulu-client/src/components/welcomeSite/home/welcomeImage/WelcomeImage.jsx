@@ -5,7 +5,7 @@ const WelcomeImage = () => {
     <div style={{ position: "relative", overflow: "hidden" }}>
       {/* Cover image — untouched */}
       <img
-        src="images/portada.jpg"
+        src="images/home.jpg"
         alt="Portada"
         style={{
           width: "100%",
@@ -52,7 +52,7 @@ const WelcomeImage = () => {
           fontFamily: "'Segoe UI', system-ui, sans-serif",
         }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+            <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
           </svg>
           Escuela de Vuelo — Las Parejas, Santa Fe
         </div>
@@ -103,13 +103,13 @@ const WelcomeImage = () => {
         >
           ¡Quiero saber más!
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
           </svg>
         </a>
       </div>
 
       {/* Bottom fade into page background */}
-      
+
     </div>
   );
 };

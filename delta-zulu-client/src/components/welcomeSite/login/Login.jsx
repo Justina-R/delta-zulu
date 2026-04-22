@@ -1,21 +1,54 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError(""); // Clear error when typing
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", form);
-    navigate("/myCourses")
-    // Aquí iría la lógica de autenticación
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Error al iniciar sesión");
+      }
+
+      // Guardar sesión
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirigir según el rol
+      if (data.user.role === "ADMIN") {
+        navigate("/dashboard");
+      } else {
+        navigate("/myCourses");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,6 +61,8 @@ const Login = () => {
         </div>
 
         <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "400px", margin: "0 auto" }}>
+          {error && <Alert variant="danger">{error}</Alert>}
+          
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label>Correo electrónico</Form.Label>
             <Form.Control
@@ -56,8 +91,9 @@ const Login = () => {
             type="submit"
             className="w-100"
             style={{ backgroundColor: "#044b81", borderColor: "#044b81" }}
+            disabled={loading}
           >
-            Iniciar sesión
+            {loading ? "Iniciando sesión..." : "Iniciar sesión"}
           </Button>
         </Form>
       </div>

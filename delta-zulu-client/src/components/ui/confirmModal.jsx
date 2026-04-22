@@ -7,8 +7,8 @@ const ConfirmModal = ({
   onConfirm,
   title,
   message,
-  confirmText,
-  cancelText,
+  confirmText = "Confirmar",
+  cancelText = "Cancelar",
 }) => {
   return (
     <Modal show={show} onHide={onHide} centered>

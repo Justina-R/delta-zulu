@@ -4,7 +4,7 @@ import "./WhatsAppBtn.css";
 const WhatsAppBtn = () => {
   return (
     <a
-      href="https://wa.me/5493471676535" // Reemplaza por tu número correcto
+      href="https://wa.me/5493471200014" // Reemplaza por tu número correcto
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-button"

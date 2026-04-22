@@ -18,31 +18,48 @@ import ModuleForm from "./components/dashboard/courses/moduleForm/ModuleForm";
 import MyCourses from "./components/trainingCenter/myCourses/MyCourses";
 import CourseDetail from "./components/trainingCenter/courseDetail/CourseDetail";
 import StudentExamView from "./components/trainingCenter/studentExamView/StudentExamView";
+import NotFound from "./components/ui/NotFound";
 
+
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        {/* ... existing routes ... */}
+        {/* Rutas Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/escuela" element={<FlightSchool/>}/>
         <Route path="/cursos" element={<Courses/>}/>
         <Route path="/faq" element={<Faq/>}/>
         <Route path="/contacto" element={<Contact/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/students" element={<StudentsView/>}/>
-        <Route path="/exams" element={<ExamView/>}/>
-        <Route path="/examForm" element={<ExamForm/>}/>
-        <Route path="/courses" element={<CoursesView/>}/>
-        <Route path="/studentForm" element={<StudentForm/>}/>
-        <Route path="/studentForm/:id" element={<StudentForm />} />
-        <Route path="/moduleForm" element={<ModuleForm/>}/>
-        <Route path="/myCourses" element={<MyCourses/>}/>
-        <Route path="/courseDetail" element={<CourseDetail/>}/>
-        <Route path="/studentExamView" element={<StudentExamView/>}/>
+
+        {/* Rutas Protegidas - Solo ADMIN */}
+        <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/students" element={<StudentsView/>}/>
+          <Route path="/exams" element={<ExamView/>}/>
+          <Route path="/examForm" element={<ExamForm/>}/>
+          <Route path="/examForm/:id" element={<ExamForm />} />
+          <Route path="/courses" element={<CoursesView/>}/>
+          <Route path="/studentForm" element={<StudentForm/>}/>
+          <Route path="/studentForm/:id" element={<StudentForm />} />
+          <Route path="/moduleForm" element={<ModuleForm/>}/>
+          <Route path="/moduleForm/:id" element={<ModuleForm />} />
+        </Route>
+
+        {/* Rutas Protegidas - Logueados (Estudiantes y Admin) */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/myCourses" element={<MyCourses/>}/>
+          <Route path="/courseDetail" element={<CourseDetail/>}/>
+          <Route path="/studentExamView" element={<StudentExamView/>}/>
+        </Route>
+
+        {/* Ruta 404 - No encontrado */}
+        <Route path="*" element={<NotFound />} />
       </Route>
-      
     </Routes>
   )
 }

@@ -15,7 +15,14 @@ export default async function examRoutes(fastify: FastifyInstance) {
     const { id } = request.params;
     const exam = await fastify.prisma.exam.findUnique({
       where: { id: Number(id) },
-      include: { questions: true }
+      include: { 
+        questions: true,
+        module: {
+          include: {
+            course: true
+          }
+        }
+      }
     });
     if (!exam) return reply.status(404).send({ error: 'Examen no encontrado' });
     return exam;
@@ -25,18 +32,61 @@ export default async function examRoutes(fastify: FastifyInstance) {
   fastify.post('/', { preHandler: [authenticate] }, async (request: any, reply) => {
     if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
     
-    const { titulo, courseId, questions } = request.body;
+    const { titulo, moduleId, questions } = request.body;
     
     return await fastify.prisma.exam.create({
       data: {
         titulo,
-        courseId: courseId ? Number(courseId) : null,
+        moduleId: moduleId ? Number(moduleId) : null,
         questions: {
           create: questions // Expects array of { texto, opciones, correcta }
         }
       },
       include: { questions: true }
     });
+  });
+
+  // ADMIN: Update Exam
+  fastify.put('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
+    const { id } = request.params;
+    const { titulo, moduleId, questions } = request.body;
+
+    // Delete existing questions and recreate them (simpler for now)
+    await fastify.prisma.question.deleteMany({ where: { examId: Number(id) } });
+
+    const updateData: any = {
+      titulo,
+      questions: {
+        create: questions
+      }
+    };
+
+    if (moduleId !== undefined) {
+      updateData.moduleId = moduleId ? Number(moduleId) : null;
+    }
+
+    return await fastify.prisma.exam.update({
+      where: { id: Number(id) },
+      data: updateData,
+      include: { questions: true }
+    });
+  });
+
+  // ADMIN: Delete Exam
+  fastify.delete('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
+    const { id } = request.params;
+    const examId = Number(id);
+    if (isNaN(examId)) return reply.status(400).send({ error: 'ID de examen inválido' });
+
+    try {
+      await fastify.prisma.exam.delete({ where: { id: examId } });
+      return { success: true };
+    } catch (error) {
+      console.error(error);
+      return reply.status(500).send({ error: 'Error al eliminar el examen' });
+    }
   });
 
   // STUDENT: Submit Exam Attempt

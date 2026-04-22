@@ -34,25 +34,24 @@ model Course {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   modules     Module[]
-  exams       Exam[]
 }
 
 model Module {
   id          Int      @id @default(autoincrement())
   nombre      String
   descripcion String?
-  imagenUrl   String?
   driveUrl    String?
   order       Int      @default(0)
   courseId    Int
   course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  exam        Exam?
 }
 
 model Exam {
   id          Int      @id @default(autoincrement())
   titulo      String
-  courseId    Int?
-  course      Course?  @relation(fields: [courseId], references: [id])
+  moduleId    Int?     @unique
+  module      Module?  @relation(fields: [moduleId], references: [id])
   questions   Question[]
   attempts    ExamAttempt[]
 }
@@ -71,7 +70,7 @@ model ExamAttempt {
   studentId   Int
   student     User     @relation(fields: [studentId], references: [id])
   examId      Int
-  exam        Exam     @relation(fields: [examId], references: [id])
+  exam        Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
   score       Float
   completedAt DateTime @default(now())
 }

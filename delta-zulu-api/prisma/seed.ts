@@ -7,7 +7,7 @@ dotenv.config();
 
 async function main() {
   console.log('Iniciando seed...');
-  
+
   if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL no está definido en el archivo .env');
   }
@@ -17,14 +17,19 @@ async function main() {
   const prisma = new PrismaClient({ adapter });
 
   try {
+    // Limpiar tablas relacionadas para empezar de cero
+    console.log('Limpiando base de datos de usuarios...');
+    await prisma.examAttempt.deleteMany();
+    await prisma.user.deleteMany();
+
     const admin = await prisma.user.upsert({
-      where: { email: 'admin@deltazulu.com' },
+      where: { email: 'ciacdeltazulu@gmail.com' },
       update: {},
       create: {
-        email: 'admin@deltazulu.com',
+        email: 'ciacdeltazulu@gmail.com',
         nombre: 'Admin',
         apellido: 'Delta Zulu',
-        password: 'adminpassword123',
+        password: 'ciacdeltazulu2026',
         role: 'ADMIN',
       },
     });
