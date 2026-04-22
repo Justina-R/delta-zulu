@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 import * as dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ async function main() {
     await prisma.examAttempt.deleteMany();
     await prisma.user.deleteMany();
 
+    const hashedPassword = await bcrypt.hash('ciacdeltazulu2026', 10);
     const admin = await prisma.user.upsert({
       where: { email: 'ciacdeltazulu@gmail.com' },
       update: {},
@@ -29,7 +31,7 @@ async function main() {
         email: 'ciacdeltazulu@gmail.com',
         nombre: 'Admin',
         apellido: 'Delta Zulu',
-        password: 'ciacdeltazulu2026',
+        password: hashedPassword,
         role: 'ADMIN',
       },
     });

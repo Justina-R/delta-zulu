@@ -33,7 +33,10 @@ fastify.register(cors, {
 });
 
 fastify.register(fastifyJwt, {
-  secret: process.env.JWT_SECRET || 'super-secret-key'
+  secret: process.env.JWT_SECRET as string,
+  sign: {
+    expiresIn: '7d'
+  }
 });
 
 fastify.register(prismaPlugin);

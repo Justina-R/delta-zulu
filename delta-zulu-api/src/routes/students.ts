@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import bcrypt from 'bcryptjs';
 
 export default async function studentRoutes(fastify: FastifyInstance) {
   const authenticate = (fastify as any).authenticate;
@@ -37,12 +38,13 @@ export default async function studentRoutes(fastify: FastifyInstance) {
 
     const { nombre, apellido, email, password } = request.body;
     try {
+      const hashedPassword = await bcrypt.hash(password, 10);
       const student = await fastify.prisma.user.create({
         data: {
           nombre,
           apellido,
           email,
-          password,
+          password: hashedPassword,
           role: 'STUDENT'
         }
       });
@@ -62,7 +64,9 @@ export default async function studentRoutes(fastify: FastifyInstance) {
     }
 
     const data: any = { nombre, apellido, email };
-    if (password) data.password = password;
+    if (password) {
+      data.password = await bcrypt.hash(password, 10);
+    }
 
     return await fastify.prisma.user.update({
       where: { id: Number(id) },

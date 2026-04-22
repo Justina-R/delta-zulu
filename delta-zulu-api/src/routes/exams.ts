@@ -92,14 +92,34 @@ export default async function examRoutes(fastify: FastifyInstance) {
   // STUDENT: Submit Exam Attempt
   fastify.post('/:id/attempt', { preHandler: [authenticate] }, async (request: any, reply) => {
     const { id } = request.params;
-    const { score } = request.body;
+    const { answers } = request.body; // Expects { questionIndex: selectedOptionIndex }
     
-    return await fastify.prisma.examAttempt.create({
+    const exam = await fastify.prisma.exam.findUnique({
+      where: { id: Number(id) },
+      include: { questions: true }
+    });
+    
+    if (!exam) return reply.status(404).send({ error: 'Examen no encontrado' });
+    
+    // Calcular puntaje en el servidor (Seguro)
+    let correctCount = 0;
+    exam.questions.forEach((q, index) => {
+      // El frontend envía las respuestas con el índice de la pregunta
+      if (answers[index] === q.correcta) {
+        correctCount++;
+      }
+    });
+    
+    const calculatedScore = (correctCount / exam.questions.length) * 10;
+    
+    const attempt = await fastify.prisma.examAttempt.create({
       data: {
         examId: Number(id),
         studentId: request.user.id,
-        score: parseFloat(score)
+        score: parseFloat(calculatedScore.toFixed(2))
       }
     });
+
+    return { score: attempt.score, passed: attempt.score >= 6 };
   });
 }

@@ -180,15 +180,10 @@ const StudentExamView = () => {
 
   const handleSubmit = async () => {
     if (isReview) return;
-    let correct = 0;
-    exam.questions.forEach((q, idx) => {
-      if (answers[idx] === q.correcta) correct++;
-    });
-    const finalScore = (correct / exam.questions.length) * 10;
     
     try {
-      await api.post(`/exams/${examId}/attempt`, { score: finalScore });
-      setScore(finalScore);
+      const response = await api.post(`/exams/${examId}/attempt`, { answers });
+      setScore(response.score);
       setShowResultModal(true);
     } catch (err) {
       alert(err.message);

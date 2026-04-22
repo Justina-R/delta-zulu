@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import bcrypt from 'bcryptjs';
 
 export default async function authRoutes(fastify: FastifyInstance) {
   fastify.post('/login', async (request: any, reply) => {
@@ -8,7 +9,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
       where: { email }
     });
 
-    if (!user || user.password !== password) { // In production use bcrypt!
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return reply.status(401).send({ error: 'Credenciales inválidas' });
     }
 
