@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../api/client";
 import "./Login.css";
 
 const Login = () => {
@@ -20,23 +21,14 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Error al iniciar sesión");
-      }
+      const data = await api.post("/auth/login", form);
 
       // Guardar sesión
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Dispatch event to notify layout/header
+      window.dispatchEvent(new Event("loginStatusChange"));
 
       // Redirigir según el rol
       if (data.user.role === "ADMIN") {
@@ -45,7 +37,7 @@ const Login = () => {
         navigate("/myCourses");
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Error al iniciar sesión");
     } finally {
       setLoading(false);
     }
