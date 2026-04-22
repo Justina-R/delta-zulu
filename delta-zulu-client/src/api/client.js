@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const getHeaders = () => {
   const token = localStorage.getItem("token");
@@ -48,7 +48,7 @@ export const api = {
 
   delete: async (endpoint) => {
     const headers = getHeaders();
-    delete headers["Content-Type"]; 
+    delete headers["Content-Type"];
 
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method: "DELETE",
