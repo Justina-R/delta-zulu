@@ -56,9 +56,19 @@ fastify.register(studentRoutes, { prefix: '/api/students' });
 fastify.register(courseRoutes, { prefix: '/api/courses' });
 fastify.register(examRoutes, { prefix: '/api/exams' });
 
+// Root route for debugging
+fastify.get('/', async () => {
+  return { message: 'Delta Zulu API Operativa', version: '1.0.0' };
+});
+
 // Basic Health Check
-fastify.get('/health', async (request, reply) => {
+fastify.get('/health', async () => {
   return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
+// Duplicate health check under /api/health for consistency
+fastify.get('/api/health', async () => {
+  return { status: 'ok', message: 'API Health is good' };
 });
 
 const start = async () => {
