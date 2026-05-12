@@ -6,6 +6,7 @@ import { RiComputerFill } from "react-icons/ri";
 import { AiFillDashboard } from "react-icons/ai";
 import { GoChecklist } from "react-icons/go";
 import { Container, Row, Col } from "react-bootstrap";
+import { motion } from "framer-motion";
 
 const styles = {
   section: {
@@ -111,18 +112,22 @@ const styles = {
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
   </svg>
 );
 
 const PlaneIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+    <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
   </svg>
 );
 
-const CourseCard = ({ icon, title, text, href }) => (
-  <div
+const CourseCard = ({ icon, title, text, href, index }) => (
+  <motion.div
+    initial={{ y: 40, opacity: 0 }}
+    whileInView={{ y: 0, opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
     style={styles.card}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = "0 8px 28px rgba(32,80,120,0.13)";
@@ -151,7 +156,7 @@ const CourseCard = ({ icon, title, text, href }) => (
         Más info <ArrowIcon />
       </a>
     </div>
-  </div>
+  </motion.div>
 );
 
 const courses = [
@@ -159,43 +164,43 @@ const courses = [
     icon: <FaPlane size={22} />,
     title: "Curso de Piloto Privado",
     text: "Aprendé a volar desde cero con instructores certificados y materiales actualizados.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión.",
   },
   {
     icon: <GrMoney size={22} />,
     title: "Curso de Piloto Comercial",
     text: "Perfeccioná tus habilidades como piloto profesional y accedé a oportunidades laborales en aerolíneas y empresas privadas.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión.",
   },
   {
     icon: <PiPlantFill size={22} />,
     title: "Curso de Piloto Aeroaplicador",
     text: "Capacitate en operaciones agrícolas aéreas, con énfasis en seguridad, precisión y normativas vigentes.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador.",
   },
   {
     icon: <FaPersonChalkboard size={22} />,
     title: "Curso de Instructor de Vuelo",
     text: "Formate como instructor certificado y transmití tus conocimientos a nuevos aspirantes a piloto.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo.",
   },
   {
     icon: <RiComputerFill size={22} />,
     title: "Curso de Piloto Instructor ETVI",
     text: "Convertite en guía especializado en instrucción con simuladores terrestres certificados para vuelo instrumental.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI.",
   },
   {
     icon: <AiFillDashboard size={22} />,
     title: "Habilitación de Vuelo por Instrumento",
     text: "Aprendé a volar con precisión en condiciones de baja visibilidad utilizando exclusivamente instrumentos de vuelo.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento.",
   },
   {
     icon: <GoChecklist size={22} />,
     title: "Habilitación VFR Controlado",
     text: "Obtené la habilitación para operar en espacios aéreos controlados respetando procedimientos y comunicación ATC.",
-    href: "https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado.",
+    href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado.",
   },
 ];
 
@@ -204,7 +209,13 @@ const CourseList = () => {
     <section style={styles.section}>
       <Container>
         {/* Section header */}
-        <div style={styles.sectionHeader}>
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={styles.sectionHeader}
+        >
           <div style={styles.sectionTag}>
             <PlaneIcon /> Formación aeronáutica
           </div>
@@ -212,13 +223,13 @@ const CourseList = () => {
           <p style={styles.sectionSubtitle}>
             Desde el primer vuelo hasta la habilitación profesional, tenemos el programa ideal para vos.
           </p>
-        </div>
+        </motion.div>
 
         {/* Cards grid */}
         <Row className="g-4">
           {courses.map((course, i) => (
             <Col key={i} xs={12} md={6} lg={3}>
-              <CourseCard {...course} />
+              <CourseCard {...course} index={i} />
             </Col>
           ))}
         </Row>

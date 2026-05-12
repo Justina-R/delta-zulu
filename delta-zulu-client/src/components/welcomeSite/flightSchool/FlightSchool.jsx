@@ -1,4 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { motion } from "framer-motion";
 
 const styles = {
   // ── Hero ──────────────────────────────────────────────────────────────────
@@ -193,14 +194,29 @@ const SectionBlock = ({ tag, tagIcon, title, children, imgSrc, imgAlt, reverse =
     <Container>
       <Row className={`align-items-center g-5 ${reverse ? "flex-md-row-reverse" : ""}`}>
         <Col md={6}>
-          <div style={styles.sectionTag}>
-            {tagIcon} {tag}
-          </div>
-          <h2 style={styles.sectionTitle}>{title}</h2>
-          {children}
+          <motion.div
+            initial={{ x: reverse ? 30 : -30, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div style={styles.sectionTag}>
+              {tagIcon} {tag}
+            </div>
+            <h2 style={styles.sectionTitle}>{title}</h2>
+            {children}
+          </motion.div>
         </Col>
         <Col md={6} className="text-center">
-          <img src={imgSrc} alt={imgAlt} style={styles.roundImg} />
+          <motion.img 
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            src={imgSrc} 
+            alt={imgAlt} 
+            style={styles.roundImg} 
+          />
         </Col>
       </Row>
     </Container>
@@ -212,10 +228,20 @@ const FlightSchool = () => {
     <div>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <div style={styles.hero}>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        style={styles.hero}
+      >
         <div style={styles.heroAccent1} />
         <div style={styles.heroAccent2} />
-        <div style={styles.heroInner}>
+        <motion.div 
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={styles.heroInner}
+        >
           <div style={styles.heroTag}>
             <IconPlane /> Delta Zulu — Las Parejas, Santa Fe
           </div>
@@ -223,8 +249,8 @@ const FlightSchool = () => {
           <p style={styles.heroSubtitle}>
             Formación certificada por ANAC, con flota propia y equipo humano de excelencia.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ── ¿QUIÉNES SOMOS? ───────────────────────────────────────────────── */}
       <SectionBlock

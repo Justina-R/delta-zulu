@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container } from "react-bootstrap";
+import { motion } from "framer-motion";
 
 const styles = {
   // ── Hero ──────────────────────────────────────────────────────────────────
@@ -258,14 +259,19 @@ const FaqItem = ({ question, children, eventKey }) => {
 
 // ─── Group heading ────────────────────────────────────────────────────────────
 const GroupHeading = ({ icon, label, title }) => (
-  <div>
+  <motion.div
+    initial={{ x: -20, opacity: 0 }}
+    whileInView={{ x: 0, opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+  >
     <div style={styles.groupHeader}>
       <div style={styles.groupTag}>{icon} {label}</div>
       <div style={styles.groupLine} />
     </div>
     <h2 style={styles.groupTitle}>{title}</h2>
     <div style={{ marginBottom: "20px" }} />
-  </div>
+  </motion.div>
 );
 
 const Faq = () => {
@@ -273,10 +279,20 @@ const Faq = () => {
     <div>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <div style={styles.hero}>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        style={styles.hero}
+      >
         <div style={styles.heroAccent1} />
         <div style={styles.heroAccent2} />
-        <div style={styles.heroInner}>
+        <motion.div 
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={styles.heroInner}
+        >
           <div style={styles.heroTag}>
             <IconQ /> Atención al alumno
           </div>
@@ -284,8 +300,8 @@ const Faq = () => {
           <p style={styles.heroSubtitle}>
             Todo lo que necesitás saber antes de comenzar tu formación como piloto.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ── CONTENT ───────────────────────────────────────────────────────── */}
       <div style={styles.body}>

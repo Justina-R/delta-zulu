@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { FaWhatsapp, FaEnvelope, FaPhone } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const styles = {
   // ── Hero ──────────────────────────────────────────────────────────────────
@@ -251,10 +252,20 @@ const Contact = () => {
     <div>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <div style={styles.hero}>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        style={styles.hero}
+      >
         <div style={styles.heroAccent1} />
         <div style={styles.heroAccent2} />
-        <div style={styles.heroInner}>
+        <motion.div 
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={styles.heroInner}
+        >
           <div style={styles.heroTag}>
             <IconChat /> Delta Zulu
           </div>
@@ -262,13 +273,19 @@ const Contact = () => {
           <p style={styles.heroSubtitle}>
             Estamos disponibles para resolver tus dudas y asesorarte en tu camino como piloto.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ── CONTACT CARDS ─────────────────────────────────────────────────── */}
       <section style={styles.contactSection}>
         <Container>
-          <div style={styles.sectionHeader}>
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={styles.sectionHeader}
+          >
             <div style={styles.sectionTag}>
               <IconChat /> Comunicación
             </div>
@@ -276,12 +293,16 @@ const Contact = () => {
             <p style={styles.sectionSubtitle}>
               Estamos disponibles para resolver tus dudas y asesorarte.
             </p>
-          </div>
+          </motion.div>
 
           <Row className="g-4 justify-content-center">
-            {contactItems.map(({ icon, label, value, color, accent }) => (
+            {contactItems.map(({ icon, label, value, color, accent }, i) => (
               <Col key={label} xs={12} md={4}>
-                <div
+                <motion.div
+                  initial={{ y: 30, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
                   style={styles.contactCard}
                   onMouseEnter={e => {
                     e.currentTarget.style.boxShadow = "0 8px 28px rgba(32,80,120,0.13)";
@@ -302,7 +323,7 @@ const Contact = () => {
                   </div>
                   <h5 style={styles.contactTitle}>{label}</h5>
                   <p style={styles.contactValue}>{value}</p>
-                </div>
+                </motion.div>
               </Col>
             ))}
           </Row>
@@ -312,16 +333,28 @@ const Contact = () => {
       {/* ── MAP SECTION ───────────────────────────────────────────────────── */}
       <section style={styles.mapSection}>
         <Container>
-          <div style={{ marginBottom: "36px" }}>
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ marginBottom: "36px" }}
+          >
             <div style={styles.sectionTag}>
               <IconPin /> Ubicación
             </div>
             <h2 style={styles.sectionTitle}>¿Cómo llegar?</h2>
-          </div>
+          </motion.div>
 
           <Row className="g-4 align-items-center">
             <Col md={6}>
-              <div style={styles.mapWrapper}>
+              <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                style={styles.mapWrapper}
+              >
                 <iframe
                   title="Mapa Delta Zulu"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3360.323641984416!2d-61.547501024993174!3d-32.62420375567478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95c9f16ac87549b1%3A0x992206ffdbcd7af2!2sZarantonello%20Serv.%20A%C3%A9reos.%20-%20Delta%20Zulu%20Escuela%20de%20Vuelo!5e0!3m2!1ses!2sar!4v1752512253609!5m2!1ses!2sar"
@@ -332,29 +365,36 @@ const Contact = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
-              </div>
+              </motion.div>
             </Col>
 
             <Col md={6}>
-              <h3 style={styles.mapTextTitle}>Ruta Nacional 178 Km 18</h3>
-              <p style={styles.mapText}>
-                Nuestra escuela está ubicada sobre la Ruta Nacional 178 Km 18,
-                en Las Parejas, Santa Fe. Contamos con instalaciones modernas,
-                cómodas y de fácil acceso tanto en vehículo particular como en
-                transporte público.
-              </p>
-              <ul style={styles.locationList}>
-                {[
-                  "Estacionamiento gratuito dentro del predio.",
-                  "Acceso señalizado desde la ruta principal.",
-                  "A 5 minutos del centro de Las Parejas.",
-                ].map((item, i) => (
-                  <li key={i} style={styles.locationItem}>
-                    <span style={styles.locationDot} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <motion.div
+                initial={{ x: 30, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+              >
+                <h3 style={styles.mapTextTitle}>Ruta Nacional 178 Km 18</h3>
+                <p style={styles.mapText}>
+                  Nuestra escuela está ubicada sobre la Ruta Nacional 178 Km 18,
+                  en Las Parejas, Santa Fe. Contamos con instalaciones modernas,
+                  cómodas y de fácil acceso tanto en vehículo particular como en
+                  transporte público.
+                </p>
+                <ul style={styles.locationList}>
+                  {[
+                    "Estacionamiento gratuito dentro del predio.",
+                    "Acceso señalizado desde la ruta principal.",
+                    "A 5 minutos del centro de Las Parejas.",
+                  ].map((item, i) => (
+                    <li key={i} style={styles.locationItem}>
+                      <span style={styles.locationDot} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             </Col>
           </Row>
         </Container>

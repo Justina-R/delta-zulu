@@ -1,4 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { motion } from "framer-motion";
 import { FaPlane } from "react-icons/fa";
 import { GrMoney } from "react-icons/gr";
 import { PiPlantFill } from "react-icons/pi";
@@ -215,24 +216,28 @@ const styles = {
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const IconPlaneSmall = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+    <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 1-3.5 2.5L11 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
   </svg>
 );
 const IconArrow = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
   </svg>
 );
 const IconStar = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
   </svg>
 );
 
 // ─── Course Row Component ─────────────────────────────────────────────────────
-const CourseItem = ({ icon, title, href }) => (
+const CourseItem = ({ icon, title, href, index }) => (
   <Col xs={12} md={10} className="mx-auto">
-    <div
+    <motion.div
+      initial={{ x: -20, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       style={styles.courseRow}
       onMouseEnter={e => {
         e.currentTarget.style.boxShadow = "0 8px 28px rgba(32,80,120,0.13)";
@@ -258,7 +263,7 @@ const CourseItem = ({ icon, title, href }) => (
       >
         Más info <IconArrow />
       </a>
-    </div>
+    </motion.div>
   </Col>
 );
 
@@ -267,10 +272,21 @@ const Courses = () => {
     <div style={{ fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <div style={styles.hero}>
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        style={styles.hero}
+      >
         <div style={styles.heroAccent1} />
         <div style={styles.heroAccent2} />
-        <div style={styles.heroInner}>
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={styles.heroInner}
+        >
           <div style={styles.heroTag}>
             <IconPlaneSmall /> Formación aeronáutica
           </div>
@@ -278,29 +294,36 @@ const Courses = () => {
           <p style={styles.heroSubtitle}>
             Programas certificados para cada etapa de tu carrera como piloto profesional.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* ── INTRO ─────────────────────────────────────────────────────────── */}
       <section style={styles.introSection}>
         <Container>
           <Row className="justify-content-center">
             <Col md={8} className="text-center">
-              <div style={styles.sectionTag}>
-                <IconStar /> Delta Zulu
-              </div>
-              <h2 style={styles.introTitle}>
-                Formación profesional para futuros pilotos
-              </h2>
-              <p style={styles.introLead}>
-                En Delta Zulu desarrollamos programas académicos pensados para que
-                cada alumno alcance su máximo potencial como piloto profesional.
-              </p>
-              <p style={styles.introText}>
-                Gracias a una combinación de entrenamiento práctico, recursos
-                actualizados y un cuerpo docente experimentado, nuestros egresados
-                se destacan por su excelente preparación técnica y humana.
-              </p>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <div style={styles.sectionTag}>
+                  <IconStar /> Delta Zulu
+                </div>
+                <h2 style={styles.introTitle}>
+                  Formación profesional para futuros pilotos
+                </h2>
+                <p style={styles.introLead}>
+                  En Delta Zulu desarrollamos programas académicos pensados para que
+                  cada alumno alcance su máximo potencial como piloto profesional.
+                </p>
+                <p style={styles.introText}>
+                  Gracias a una combinación de entrenamiento práctico, recursos
+                  actualizados y un cuerpo docente experimentado, nuestros egresados
+                  se destacan por su excelente preparación técnica y humana.
+                </p>
+              </motion.div>
             </Col>
           </Row>
         </Container>
@@ -309,7 +332,11 @@ const Courses = () => {
       {/* ── SCHEMA IMAGE ──────────────────────────────────────────────────── */}
       <section style={styles.schemaSection} className="d-none d-md-block">
         <Container className="text-center">
-          <img
+          <motion.img
+            initial={{ scale: 0.95, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
             src="images/carrera-piloto-profesional.png"
             alt="Esquema de cursos"
             className="img-fluid rounded"
@@ -336,41 +363,23 @@ const Courses = () => {
           </div>
 
           <Row className="g-3">
-            <CourseItem
-              icon={<FaPlane size={22} />}
-              title="Piloto Privado de Avión"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión."
-            />
-            <CourseItem
-              icon={<GrMoney size={22} />}
-              title="Piloto Comercial de Avión"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión."
-            />
-            <CourseItem
-              icon={<PiPlantFill size={22} />}
-              title="Piloto Aeroaplicador"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador."
-            />
-            <CourseItem
-              icon={<FaPersonChalkboard size={22} />}
-              title="Piloto Instructor de Vuelo"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo."
-            />
-            <CourseItem
-              icon={<RiComputerFill size={22} />}
-              title="Piloto Instructor de Entrenador Terrestre de Vuelo por Instrumento (ETVI)"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI."
-            />
-            <CourseItem
-              icon={<AiFillDashboard size={22} />}
-              title="Habilitación de Vuelo por Instrumento (HVI)"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento."
-            />
-            <CourseItem
-              icon={<GoChecklist size={22} />}
-              title="Habilitación VFR Controlado"
-              href="https://wa.me/3471676535?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado."
-            />
+            {[
+              { icon: <FaPlane size={22} />, title: "Piloto Privado de Avión", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Privado%20de%20Avión." },
+              { icon: <GrMoney size={22} />, title: "Piloto Comercial de Avión", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Comercial%20de%20Avión." },
+              { icon: <PiPlantFill size={22} />, title: "Piloto Aeroaplicador", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Aeroaplicador." },
+              { icon: <FaPersonChalkboard size={22} />, title: "Piloto Instructor de Vuelo", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%Instructor%20de%20Vuelo." },
+              { icon: <RiComputerFill size={22} />, title: "Piloto Instructor de Entrenador Terrestre de Vuelo por Instrumento (ETVI)", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Piloto%20Instructor%20de%20ETVI." },
+              { icon: <AiFillDashboard size={22} />, title: "Habilitación de Vuelo por Instrumento (HVI)", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20de%20Vuelo%20Por%20Instrumento." },
+              { icon: <GoChecklist size={22} />, title: "Habilitación VFR Controlado", href: "https://wa.me/3471200014?text=Hola%2C%20quiero%20saber%20más%20sobre%20el%20curso%20de%20Habilitación%20VFR%20Controlado." }
+            ].map((course, i) => (
+              <CourseItem
+                key={i}
+                index={i}
+                icon={course.icon}
+                title={course.title}
+                href={course.href}
+              />
+            ))}
           </Row>
         </Container>
       </section>

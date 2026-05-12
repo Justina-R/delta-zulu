@@ -3,6 +3,7 @@ import { Form, Button, Alert, InputGroup } from "react-bootstrap";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api/client";
+import { motion } from "framer-motion";
 import "./Login.css";
 
 const Login = () => {
@@ -46,12 +47,34 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container d-flex">
-      <div className="login-image d-none d-md-block"></div>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="login-container d-flex"
+    >
+      <motion.div 
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="login-image d-none d-md-block"
+      ></motion.div>
 
-      <div className="login-form-container d-flex flex-column justify-content-center px-5">
+      <motion.div 
+        initial={{ x: 50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="login-form-container d-flex flex-column justify-content-center px-5"
+      >
         <div className="text-center mb-4">
-          <h2 className="mt-2">Centro de Entrenamiento</h2>
+          <motion.h2 
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-2"
+          >
+            Centro de Entrenamiento
+          </motion.h2>
         </div>
 
         <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "400px", margin: "0 auto" }}>
@@ -99,8 +122,8 @@ const Login = () => {
             {loading ? "Iniciando sesión..." : "Iniciar sesión"}
           </Button>
         </Form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
