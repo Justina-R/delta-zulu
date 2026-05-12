@@ -347,7 +347,7 @@ const Contact = () => {
                 {[
                   "Estacionamiento gratuito dentro del predio.",
                   "Acceso señalizado desde la ruta principal.",
-                  "A 10 minutos del centro de Las Parejas.",
+                  "A 5 minutos del centro de Las Parejas.",
                 ].map((item, i) => (
                   <li key={i} style={styles.locationItem}>
                     <span style={styles.locationDot} />

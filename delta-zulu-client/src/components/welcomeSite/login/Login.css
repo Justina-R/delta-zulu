@@ -31,3 +31,23 @@
     width: 100%;
   }
 }
+
+.password-toggle {
+  background-color: #fff !important;
+  border-color: #dee2e6;
+  color: #6c757d;
+}
+
+.password-toggle:hover {
+  color: #044b81;
+  background-color: #f8f9fa !important;
+}
+
+.password-toggle:focus {
+  box-shadow: none !important;
+  border-color: #dee2e6;
+}
+
+.form-control:focus+.password-toggle {
+  border-color: #86b7fe;
+}
