@@ -77,9 +77,9 @@ export default async function courseRoutes(fastify: FastifyInstance) {
   fastify.post('/', { preHandler: [authenticate] }, async (request: any, reply) => {
     if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
 
-    const { nombre, descripcion } = request.body;
+    const { nombre, descripcion, imagenUrl } = request.body;
     return await fastify.prisma.course.create({
-      data: { nombre, descripcion }
+      data: { nombre, descripcion, imagenUrl }
     });
   });
 
@@ -105,10 +105,10 @@ export default async function courseRoutes(fastify: FastifyInstance) {
   fastify.put('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
     if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
     const { id } = request.params;
-    const { nombre, descripcion } = request.body;
+    const { nombre, descripcion, imagenUrl } = request.body;
     return await fastify.prisma.course.update({
       where: { id: Number(id) },
-      data: { nombre, descripcion }
+      data: { nombre, descripcion, imagenUrl }
     });
   });
 

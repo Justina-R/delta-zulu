@@ -48,16 +48,30 @@ const CourseModal = ({ show, onHide, onSave, initialData }) => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>URL de Imagen</Form.Label>
-          <Form.Control 
-            type="url" 
+          <Form.Label>Imagen de portada</Form.Label>
+          <Form.Select 
             value={imagenUrl}
             onChange={(e) => setImagenUrl(e.target.value)}
-            placeholder="https://ejemplo.com/imagen.jpg" 
-          />
+          >
+            <option value="">Seleccione una imagen</option>
+            <option value="/images/covers/avion.jpeg">Avión</option>
+            <option value="/images/covers/cessna.jpeg">Cessna</option>
+            <option value="/images/covers/clases.jpeg">Clases</option>
+            <option value="/images/covers/cursos.jpeg">Cursos</option>
+          </Form.Select>
           {imagenUrl && (
-            <div className="mt-3 text-center">
-              <img src={imagenUrl} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px", borderRadius: "8px" }} />
+            <div className="mt-3 text-center p-2 border rounded bg-light">
+              <p className="small text-muted mb-2">Previsualización:</p>
+              <img 
+                src={imagenUrl} 
+                alt="Preview" 
+                style={{ 
+                  maxWidth: "100%", 
+                  maxHeight: "180px", 
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)" 
+                }} 
+              />
             </div>
           )}
         </Form.Group>
