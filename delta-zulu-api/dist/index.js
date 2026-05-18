@@ -68,7 +68,7 @@ fastify.register(cors_1.default, {
 fastify.register(jwt_1.default, {
     secret: process.env.JWT_SECRET,
     sign: {
-        expiresIn: '1h'
+        expiresIn: '4h'
     }
 });
 fastify.register(prisma_js_1.default);

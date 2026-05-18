@@ -35,7 +35,7 @@ fastify.register(cors, {
 fastify.register(fastifyJwt, {
   secret: process.env.JWT_SECRET as string,
   sign: {
-    expiresIn: '1h'
+    expiresIn: '4h'
   }
 });
 
