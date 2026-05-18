@@ -148,13 +148,31 @@ const MyCourses = () => {
         </div>
 
         <div style={styles.sectionTitle}><span style={styles.sectionDot} />Cursos disponibles</div>
-        <Row className="g-4">
-          {courses.map(course => (
-            <Col key={course.id} md={4} sm={6}>
-              <CourseCard course={course} />
-            </Col>
-          ))}
-        </Row>
+        {courses.length === 0 ? (
+          <div style={{ 
+            textAlign: "center", 
+            padding: "60px 20px", 
+            background: "#ffffff", 
+            borderRadius: "14px", 
+            border: "1px solid #e8ecf0", 
+            boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+            marginTop: "20px"
+          }}>
+            <div style={{ fontSize: "3rem", marginBottom: "15px" }}>✈️</div>
+            <h4 style={{ color: "#1a2a3a", fontWeight: 700, marginBottom: "8px" }}>Todavía no tienes cursos asignados</h4>
+            <p style={{ color: "#6b7a87", fontSize: "0.95rem", maxWidth: "450px", margin: "0 auto" }}>
+              Comunícate con administración para que te asignen los cursos correspondientes a tu plan de vuelo.
+            </p>
+          </div>
+        ) : (
+          <Row className="g-4">
+            {courses.map(course => (
+              <Col key={course.id} md={4} sm={6}>
+                <CourseCard course={course} />
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
     </div>
   );

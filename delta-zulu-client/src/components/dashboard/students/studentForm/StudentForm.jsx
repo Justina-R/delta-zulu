@@ -3,9 +3,10 @@ import { BsEye, BsEyeSlash, BsArrowLeft } from "react-icons/bs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../../../api/client";
+import Loader from "../../../ui/Loader";
 
 const styles = {
-  page: { background: "#f4f6f9", minHeight: "100vh", fontFamily: "'Segoe UI', system-ui, sans-serif", paddingTop: "1rem", paddingBottom: "60px" },
+  page: { background: "#f4f6f9", minHeight: "100vh", fontFamily: "'Segoe UI', system-ui, sans-serif", paddingTop: "90px", paddingBottom: "60px" },
   heroCard: { background: "linear-gradient(135deg, #205078 0%, #1a3f60 60%, #122d46 100%)", borderRadius: "20px", padding: "40px 48px", color: "#ffffff", position: "relative", overflow: "hidden", marginBottom: "40px", boxShadow: "0 12px 48px rgba(32,80,120,0.25)" },
   heroAccent: { position: "absolute", top: "-60px", right: "-60px", width: "280px", height: "280px", borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" },
   heroAccent2: { position: "absolute", bottom: "-80px", right: "120px", width: "200px", height: "200px", borderRadius: "50%", background: "rgba(255,255,255,0.03)", pointerEvents: "none" },
@@ -29,6 +30,38 @@ const styles = {
   submitBtn: { background: "#205078", border: "none", color: "#fff", borderRadius: "10px", padding: "12px 32px", fontSize: "0.92rem", fontWeight: 700, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", transition: "background 0.18s", letterSpacing: "0.01em" },
   sectionLabel: { fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#b0bec9", marginBottom: "18px", display: "flex", alignItems: "center", gap: "8px" },
   sectionLabelLine: { flex: 1, height: "1px", background: "#eef0f3" },
+  courseCardGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px", marginTop: "12px" },
+  courseCard: { 
+    display: "flex", 
+    alignItems: "center", 
+    justifyContent: "space-between", 
+    padding: "16px 20px", 
+    borderRadius: "12px", 
+    border: "1.5px solid #e8ecf0", 
+    background: "#fff", 
+    cursor: "pointer", 
+    transition: "all 0.2s ease" 
+  },
+  courseCardActive: { 
+    borderColor: "#198754", 
+    background: "rgba(25, 135, 84, 0.02)",
+    boxShadow: "0 4px 12px rgba(25, 135, 84, 0.08)" 
+  },
+  courseInfo: { display: "flex", flexDirection: "column", gap: "4px" },
+  courseName: { fontSize: "0.92rem", fontWeight: 700, color: "#1a2a3a", margin: 0 },
+  courseBadge: { 
+    alignSelf: "flex-start", 
+    fontSize: "0.68rem", 
+    fontWeight: 700, 
+    padding: "3px 8px", 
+    borderRadius: "6px", 
+    textTransform: "uppercase" 
+  },
+  courseBadgeActive: { background: "rgba(25, 135, 84, 0.1)", color: "#198754" },
+  courseBadgeInactive: { background: "#f1f3f5", color: "#6b7a87" },
+  courseToggleIcon: { fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", width: "32px", height: "32px", minWidth: "32px", minHeight: "32px", borderRadius: "50%", transition: "all 0.2s", flexShrink: 0 },
+  courseToggleIconActive: { background: "rgba(25, 135, 84, 0.1)", color: "#198754" },
+  courseToggleIconInactive: { background: "#f8fafc", color: "#b0bec9", border: "1px dashed #ced4da" },
 };
 
 const IconUser = () => (
@@ -63,24 +96,60 @@ const StudentForm = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [allCourses, setAllCourses] = useState([]);
+  const [studentCourses, setStudentCourses] = useState([]);
+  const [initialCourses, setInitialCourses] = useState([]);
+  const [initialData, setInitialData] = useState(null);
+  const [togglingCourseId, setTogglingCourseId] = useState(null);
 
   useEffect(() => {
     if (id) {
       setLoading(true);
-      api.get(`/students/${id}`)
-        .then((data) => {
+      Promise.all([
+        api.get(`/students/${id}`),
+        api.get("/courses")
+      ])
+        .then(([studentData, coursesData]) => {
           setFormData({
-            nombre: data.nombre,
-            apellido: data.apellido,
-            email: data.email,
+            nombre: studentData.nombre,
+            apellido: studentData.apellido,
+            email: studentData.email,
             password: "",
             confirmPassword: "",
           });
+          setInitialData({
+            nombre: studentData.nombre,
+            apellido: studentData.apellido,
+            email: studentData.email,
+          });
+          setStudentCourses(studentData.courses || []);
+          setInitialCourses(studentData.courses || []);
+          setAllCourses(coursesData || []);
         })
         .catch(err => setError(err.message))
         .finally(() => setLoading(false));
     }
   }, [id]);
+
+  const handleToggleCourse = async (course) => {
+    const isEnrolled = studentCourses.some(c => c.id === course.id);
+    setTogglingCourseId(course.id);
+    try {
+      if (isEnrolled) {
+        // Remove course
+        await api.delete(`/students/${id}/courses/${course.id}`);
+        setStudentCourses(prev => prev.filter(c => c.id !== course.id));
+      } else {
+        // Add course
+        await api.post(`/students/${id}/courses/${course.id}`, {});
+        setStudentCourses(prev => [...prev, course]);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setTogglingCourseId(null);
+    }
+  };
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -122,10 +191,28 @@ const StudentForm = () => {
     e.target.style.background = "#f8fafc";
   };
 
-  if (loading) return <div className="p-5 text-center">Cargando...</div>;
+  const hasChanges = isEdit && (
+    (initialData && (
+      formData.nombre !== initialData.nombre ||
+      formData.apellido !== initialData.apellido ||
+      formData.email !== initialData.email ||
+      formData.password !== ""
+    )) ||
+    (initialCourses && (
+      studentCourses.length !== initialCourses.length ||
+      !initialCourses.every(ic => studentCourses.some(sc => sc.id === ic.id))
+    ))
+  );
+
+  if (loading) return <Loader text="Cargando datos del alumno..." />;
 
   return (
     <div style={styles.page}>
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
       <div className="container">
         <div style={styles.heroCard}>
           <div style={styles.heroAccent} />
@@ -144,6 +231,27 @@ const StudentForm = () => {
           <div style={styles.formCardAccent} />
           <div style={styles.formBody}>
             <form onSubmit={handleSubmit}>
+              {hasChanges && (
+                <div style={{
+                  background: "rgba(243, 156, 18, 0.08)",
+                  border: "1.5px solid rgba(243, 156, 18, 0.3)",
+                  borderRadius: "12px",
+                  padding: "16px 20px",
+                  fontSize: "0.92rem",
+                  color: "#d35400",
+                  marginBottom: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  fontWeight: 500,
+                  boxShadow: "0 4px 15px rgba(243, 156, 18, 0.05)"
+                }}>
+                  <span style={{ fontSize: "1.3rem" }}>⚠️</span>
+                  <span>
+                    Ha realizado cambios en los datos del alumno. Para guardarlos, seleccione el botón <strong>"Guardar cambios"</strong> al final de esta página.
+                  </span>
+                </div>
+              )}
               <div style={styles.sectionLabel}><span>Datos personales</span><div style={styles.sectionLabelLine} /></div>
               <div className="row g-3" style={{ marginBottom: "4px" }}>
                 <div className="col-md-6">
@@ -181,6 +289,70 @@ const StudentForm = () => {
                   </Field>
                 </div>
               </div>
+
+              {isEdit && (
+                <>
+                  <hr style={styles.divider} />
+                  <div style={styles.sectionLabel}><span>Cursos asignados</span><div style={styles.sectionLabelLine} /></div>
+                  <p style={{ color: "#6b7a87", fontSize: "0.88rem", marginTop: "-10px", marginBottom: "20px" }}>
+                    Seleccioná los cursos a los que este alumno tiene permitido acceder. Hacé click sobre un curso para asignarlo o removerlo.
+                  </p>
+                  
+                  {allCourses.length === 0 ? (
+                    <div style={{ padding: "20px", textAlign: "center", color: "#6b7a87", fontStyle: "italic" }}>
+                      No hay cursos cargados en el sistema.
+                    </div>
+                  ) : (
+                    <div style={styles.courseCardGrid}>
+                      {allCourses.map((course) => {
+                        const isEnrolled = studentCourses.some(c => c.id === course.id);
+                        return (
+                          <div 
+                            key={course.id} 
+                            style={{
+                              ...styles.courseCard,
+                              ...(isEnrolled ? styles.courseCardActive : {})
+                            }}
+                            onClick={() => handleToggleCourse(course)}
+                          >
+                            <div style={styles.courseInfo}>
+                              <h6 style={styles.courseName}>{course.nombre}</h6>
+                              <span style={{
+                                ...styles.courseBadge,
+                                ...(isEnrolled ? styles.courseBadgeActive : styles.courseBadgeInactive)
+                              }}>
+                                {isEnrolled ? "Asignado" : "Sin asignar"}
+                              </span>
+                            </div>
+                            <div style={{
+                              ...styles.courseToggleIcon,
+                              ...(isEnrolled ? styles.courseToggleIconActive : styles.courseToggleIconInactive)
+                            }}>
+                              {togglingCourseId === course.id ? (
+                                <svg 
+                                  width="14" 
+                                  height="14" 
+                                  viewBox="0 0 24 24" 
+                                  fill="none" 
+                                  stroke={isEnrolled ? "#198754" : "#205078"} 
+                                  strokeWidth="4" 
+                                  strokeLinecap="round" 
+                                  style={{ animation: "spin 0.8s linear infinite" }}
+                                >
+                                  <circle cx="12" cy="12" r="10" stroke="rgba(0,0,0,0.06)" />
+                                  <path d="M12 2a10 10 0 0 1 10 10" />
+                                </svg>
+                              ) : (
+                                isEnrolled ? "✓" : "+"
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              )}
 
               {error && <div style={styles.errorBox}>{error}</div>}
               <hr style={styles.divider} />

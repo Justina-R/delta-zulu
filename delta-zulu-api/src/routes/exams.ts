@@ -13,6 +13,27 @@ export default async function examRoutes(fastify: FastifyInstance) {
   // Get exam with questions
   fastify.get('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
     const { id } = request.params;
+    const userId = request.user.id;
+    const userRole = request.user.role;
+
+    if (userRole === 'STUDENT') {
+      const examWithAccess = await fastify.prisma.exam.findFirst({
+        where: {
+          id: Number(id),
+          module: {
+            course: {
+              students: {
+                some: { id: userId }
+              }
+            }
+          }
+        }
+      });
+      if (!examWithAccess) {
+        return reply.status(403).send({ error: 'No tienes acceso a este examen' });
+      }
+    }
+
     const exam = await fastify.prisma.exam.findUnique({
       where: { id: Number(id) },
       include: { 
@@ -93,6 +114,26 @@ export default async function examRoutes(fastify: FastifyInstance) {
   fastify.post('/:id/attempt', { preHandler: [authenticate] }, async (request: any, reply) => {
     const { id } = request.params;
     const { answers } = request.body; // Expects { questionIndex: selectedOptionIndex }
+    const userId = request.user.id;
+    const userRole = request.user.role;
+
+    if (userRole === 'STUDENT') {
+      const examWithAccess = await fastify.prisma.exam.findFirst({
+        where: {
+          id: Number(id),
+          module: {
+            course: {
+              students: {
+                some: { id: userId }
+              }
+            }
+          }
+        }
+      });
+      if (!examWithAccess) {
+        return reply.status(403).send({ error: 'No tienes acceso a este examen' });
+      }
+    }
     
     const exam = await fastify.prisma.exam.findUnique({
       where: { id: Number(id) },

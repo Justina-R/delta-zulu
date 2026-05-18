@@ -1,0 +1,166 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = courseRoutes;
+async function courseRoutes(fastify) {
+    const authenticate = fastify.authenticate;
+    // List all courses (Admins see all, Students see assigned)
+    fastify.get('/', { preHandler: [authenticate] }, async (request, reply) => {
+        const userId = request.user.id;
+        const userRole = request.user.role;
+        if (userRole === 'ADMIN') {
+            return await fastify.prisma.course.findMany({
+                include: { modules: { include: { exam: true }, orderBy: { order: 'asc' } } }
+            });
+        }
+        else {
+            return await fastify.prisma.course.findMany({
+                where: {
+                    students: {
+                        some: { id: userId }
+                    }
+                },
+                include: { modules: { include: { exam: true }, orderBy: { order: 'asc' } } }
+            });
+        }
+    });
+    // Get student progress
+    fastify.get('/my-progress', { preHandler: [authenticate] }, async (request, reply) => {
+        const studentId = request.user.id;
+        const isStudent = request.user.role === 'STUDENT';
+        // Admins see all courses, students see only their assigned courses
+        const whereClause = isStudent ? {
+            students: {
+                some: { id: studentId }
+            }
+        } : {};
+        return await fastify.prisma.course.findMany({
+            where: whereClause,
+            include: {
+                modules: {
+                    include: {
+                        exam: {
+                            include: {
+                                attempts: {
+                                    where: { studentId },
+                                    orderBy: { completedAt: 'desc' }
+                                }
+                            }
+                        }
+                    },
+                    orderBy: { order: 'asc' }
+                }
+            }
+        });
+    });
+    // Get course detail
+    fastify.get('/:id', { preHandler: [authenticate] }, async (request, reply) => {
+        const { id } = request.params;
+        const userId = request.user.id;
+        const userRole = request.user.role;
+        // Check permissions if role is STUDENT
+        if (userRole === 'STUDENT') {
+            const isEnrolled = await fastify.prisma.course.findFirst({
+                where: {
+                    id: Number(id),
+                    students: {
+                        some: { id: userId }
+                    }
+                }
+            });
+            if (!isEnrolled) {
+                return reply.status(403).send({ error: 'No tienes acceso a este curso' });
+            }
+        }
+        const course = await fastify.prisma.course.findUnique({
+            where: { id: Number(id) },
+            include: {
+                modules: {
+                    include: {
+                        exam: {
+                            include: {
+                                attempts: {
+                                    where: { studentId: userId },
+                                    orderBy: { completedAt: 'desc' },
+                                    take: 1
+                                }
+                            }
+                        }
+                    },
+                    orderBy: { order: 'asc' }
+                }
+            }
+        });
+        if (!course)
+            return reply.status(404).send({ error: 'Curso no encontrado' });
+        return course;
+    });
+    // ADMIN ONLY ROUTES
+    // Create Course
+    fastify.post('/', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { nombre, descripcion, imagenUrl } = request.body;
+        return await fastify.prisma.course.create({
+            data: { nombre, descripcion, imagenUrl }
+        });
+    });
+    // Create Module
+    fastify.post('/:id/modules', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { id } = request.params;
+        const { nombre, descripcion, driveUrl, order } = request.body;
+        return await fastify.prisma.module.create({
+            data: {
+                nombre,
+                descripcion,
+                driveUrl,
+                order: order || 0,
+                courseId: Number(id)
+            }
+        });
+    });
+    // Update Course
+    fastify.put('/:id', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { id } = request.params;
+        const { nombre, descripcion, imagenUrl } = request.body;
+        return await fastify.prisma.course.update({
+            where: { id: Number(id) },
+            data: { nombre, descripcion, imagenUrl }
+        });
+    });
+    // Delete Course
+    fastify.delete('/:id', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { id } = request.params;
+        await fastify.prisma.course.delete({ where: { id: Number(id) } });
+        return { success: true };
+    });
+    // Get Module detail
+    fastify.get('/modules/:id', async (request, reply) => {
+        const { id } = request.params;
+        return await fastify.prisma.module.findUnique({ where: { id: Number(id) } });
+    });
+    // Update Module
+    fastify.put('/modules/:id', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { id } = request.params;
+        const { nombre, descripcion, driveUrl, order } = request.body;
+        return await fastify.prisma.module.update({
+            where: { id: Number(id) },
+            data: { nombre, descripcion, driveUrl, order }
+        });
+    });
+    // Delete Module
+    fastify.delete('/modules/:id', { preHandler: [authenticate] }, async (request, reply) => {
+        if (request.user.role !== 'ADMIN')
+            return reply.status(403).send({ error: 'No autorizado' });
+        const { id } = request.params;
+        await fastify.prisma.module.delete({ where: { id: Number(id) } });
+        return { success: true };
+    });
+}

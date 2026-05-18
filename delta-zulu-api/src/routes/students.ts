@@ -10,7 +10,10 @@ export default async function studentRoutes(fastify: FastifyInstance) {
     
     const students = await fastify.prisma.user.findMany({
       where: { role: 'STUDENT' },
-      include: { attempts: { include: { exam: true } } }
+      include: { 
+        attempts: { include: { exam: true } },
+        courses: true
+      }
     });
     return students;
   });
@@ -25,7 +28,10 @@ export default async function studentRoutes(fastify: FastifyInstance) {
 
     const student = await fastify.prisma.user.findUnique({
       where: { id: Number(id) },
-      include: { attempts: { include: { exam: true } } }
+      include: { 
+        attempts: { include: { exam: true } },
+        courses: true
+      }
     });
     
     if (!student) return reply.status(404).send({ error: 'Estudiante no encontrado' });
@@ -86,5 +92,83 @@ export default async function studentRoutes(fastify: FastifyInstance) {
 
     await fastify.prisma.user.delete({ where: { id: Number(id) } });
     return { success: true };
+  });
+
+  // ADMIN ONLY: Add course to student
+  fastify.post('/:studentId/courses/:courseId', { preHandler: [authenticate] }, async (request: any, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
+
+    const studentId = Number(request.params.studentId);
+    const courseId = Number(request.params.courseId);
+
+    // Verify student exists and has role STUDENT
+    const student = await fastify.prisma.user.findUnique({
+      where: { id: studentId }
+    });
+    if (!student) return reply.status(404).send({ error: 'Estudiante no encontrado' });
+    if (student.role !== 'STUDENT') return reply.status(400).send({ error: 'El usuario no es un estudiante' });
+
+    // Verify course exists
+    const course = await fastify.prisma.course.findUnique({
+      where: { id: courseId }
+    });
+    if (!course) return reply.status(404).send({ error: 'Curso no encontrado' });
+
+    // Verify if already enrolled to avoid duplicates
+    const isEnrolled = await fastify.prisma.user.findFirst({
+      where: {
+        id: studentId,
+        courses: {
+          some: { id: courseId }
+        }
+      }
+    });
+    if (isEnrolled) {
+      return reply.status(400).send({ error: 'El estudiante ya está inscrito en este curso' });
+    }
+
+    // Enroll
+    await fastify.prisma.user.update({
+      where: { id: studentId },
+      data: {
+        courses: {
+          connect: { id: courseId }
+        }
+      }
+    });
+
+    return { success: true, message: 'Curso asignado correctamente' };
+  });
+
+  // ADMIN ONLY: Remove course from student
+  fastify.delete('/:studentId/courses/:courseId', { preHandler: [authenticate] }, async (request: any, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
+
+    const studentId = Number(request.params.studentId);
+    const courseId = Number(request.params.courseId);
+
+    // Verify student exists
+    const student = await fastify.prisma.user.findUnique({
+      where: { id: studentId }
+    });
+    if (!student) return reply.status(404).send({ error: 'Estudiante no encontrado' });
+
+    // Verify course exists
+    const course = await fastify.prisma.course.findUnique({
+      where: { id: courseId }
+    });
+    if (!course) return reply.status(404).send({ error: 'Curso no encontrado' });
+
+    // Unenroll
+    await fastify.prisma.user.update({
+      where: { id: studentId },
+      data: {
+        courses: {
+          disconnect: { id: courseId }
+        }
+      }
+    });
+
+    return { success: true, message: 'Curso removido correctamente' };
   });
 }

@@ -8,29 +8,39 @@ const getHeaders = () => {
   };
 };
 
+const handleResponse = async (response) => {
+  if (!response.ok) {
+    if (response.status === 401) {
+      // Token expirado o inválido -> Limpiar sesión y redirigir
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login?expired=true";
+    }
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || "Error en la petición");
+  }
+  return response.json();
+};
+
 export const api = {
   get: async (endpoint) => {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       headers: getHeaders(),
     });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Error en la petición");
-    }
-    return response.json();
+    return handleResponse(response);
   },
 
   post: async (endpoint, body) => {
+    const headers = getHeaders();
+    if (body === undefined) {
+      delete headers["Content-Type"];
+    }
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method: "POST",
-      headers: getHeaders(),
-      body: JSON.stringify(body),
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
     });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Error en la petición");
-    }
-    return response.json();
+    return handleResponse(response);
   },
 
   put: async (endpoint, body) => {
@@ -39,11 +49,7 @@ export const api = {
       headers: getHeaders(),
       body: JSON.stringify(body),
     });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Error en la petición");
-    }
-    return response.json();
+    return handleResponse(response);
   },
 
   delete: async (endpoint) => {
@@ -54,10 +60,6 @@ export const api = {
       method: "DELETE",
       headers,
     });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Error en la petición");
-    }
-    return response.json();
+    return handleResponse(response);
   },
 };

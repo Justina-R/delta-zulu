@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Alert, InputGroup } from "react-bootstrap";
 import { Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { api } from "../../../api/client";
 import { motion } from "framer-motion";
 import "./Login.css";
@@ -12,6 +12,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isExpired = new URLSearchParams(location.search).get("expired") === "true";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -78,6 +81,11 @@ const Login = () => {
         </div>
 
         <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "400px", margin: "0 auto" }}>
+          {isExpired && !error && (
+            <Alert variant="warning" className="text-center small">
+              Tu sesión ha expirado por seguridad. Por favor, ingresa de nuevo.
+            </Alert>
+          )}
           {error && <Alert variant="danger">{error}</Alert>}
           
           <Form.Group className="mb-3" controlId="formEmail">

@@ -3,17 +3,41 @@ import { FastifyInstance } from 'fastify';
 export default async function courseRoutes(fastify: FastifyInstance) {
   const authenticate = (fastify as any).authenticate;
 
-  // List all courses (Public or Student)
-  fastify.get('/', async (request, reply) => {
-    return await fastify.prisma.course.findMany({
-      include: { modules: { include: { exam: true }, orderBy: { order: 'asc' } } }
-    });
+  // List all courses (Admins see all, Students see assigned)
+  fastify.get('/', { preHandler: [authenticate] }, async (request: any, reply) => {
+    const userId = request.user.id;
+    const userRole = request.user.role;
+
+    if (userRole === 'ADMIN') {
+      return await fastify.prisma.course.findMany({
+        include: { modules: { include: { exam: true }, orderBy: { order: 'asc' } } }
+      });
+    } else {
+      return await fastify.prisma.course.findMany({
+        where: {
+          students: {
+            some: { id: userId }
+          }
+        },
+        include: { modules: { include: { exam: true }, orderBy: { order: 'asc' } } }
+      });
+    }
   });
 
   // Get student progress
   fastify.get('/my-progress', { preHandler: [authenticate] }, async (request: any, reply) => {
     const studentId = request.user.id;
+    const isStudent = request.user.role === 'STUDENT';
+
+    // Admins see all courses, students see only their assigned courses
+    const whereClause = isStudent ? {
+      students: {
+        some: { id: studentId }
+      }
+    } : {};
+
     return await fastify.prisma.course.findMany({
+      where: whereClause,
       include: {
         modules: {
           include: {
@@ -33,19 +57,25 @@ export default async function courseRoutes(fastify: FastifyInstance) {
   });
 
   // Get course detail
-  fastify.get('/:id', async (request: any, reply) => {
+  fastify.get('/:id', { preHandler: [authenticate] }, async (request: any, reply) => {
     const { id } = request.params;
+    const userId = request.user.id;
+    const userRole = request.user.role;
 
-    // Try to get student info if token is present
-    let studentId: number | null = null;
-    try {
-      const authHeader = request.headers.authorization;
-      if (authHeader) {
-        const decoded: any = await request.jwtVerify();
-        studentId = decoded.id;
+    // Check permissions if role is STUDENT
+    if (userRole === 'STUDENT') {
+      const isEnrolled = await fastify.prisma.course.findFirst({
+        where: {
+          id: Number(id),
+          students: {
+            some: { id: userId }
+          }
+        }
+      });
+
+      if (!isEnrolled) {
+        return reply.status(403).send({ error: 'No tienes acceso a este curso' });
       }
-    } catch (e) {
-      // Not authenticated, ignore
     }
 
     const course = await fastify.prisma.course.findUnique({
@@ -53,15 +83,15 @@ export default async function courseRoutes(fastify: FastifyInstance) {
       include: {
         modules: {
           include: {
-            exam: studentId ? {
+            exam: {
               include: {
                 attempts: {
-                  where: { studentId },
+                  where: { studentId: userId },
                   orderBy: { completedAt: 'desc' },
                   take: 1
                 }
               }
-            } : true
+            }
           },
           orderBy: { order: 'asc' }
         }
