@@ -103,13 +103,13 @@ const StudentForm = () => {
   const [togglingCourseId, setTogglingCourseId] = useState(null);
 
   useEffect(() => {
-    if (id) {
-      setLoading(true);
-      Promise.all([
-        api.get(`/students/${id}`),
-        api.get("/courses")
-      ])
-        .then(([studentData, coursesData]) => {
+    setLoading(true);
+    const fetchCourses = api.get("/courses");
+    const fetchStudent = id ? api.get(`/students/${id}`) : Promise.resolve(null);
+
+    Promise.all([fetchStudent, fetchCourses])
+      .then(([studentData, coursesData]) => {
+        if (studentData) {
           setFormData({
             nombre: studentData.nombre,
             apellido: studentData.apellido,
@@ -124,15 +124,27 @@ const StudentForm = () => {
           });
           setStudentCourses(studentData.courses || []);
           setInitialCourses(studentData.courses || []);
-          setAllCourses(coursesData || []);
-        })
-        .catch(err => setError(err.message))
-        .finally(() => setLoading(false));
-    }
+        }
+        setAllCourses(coursesData || []);
+      })
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
   const handleToggleCourse = async (course) => {
     const isEnrolled = studentCourses.some(c => c.id === course.id);
+    
+    if (!isEdit) {
+      // In creation mode, just update local state
+      if (isEnrolled) {
+        setStudentCourses(prev => prev.filter(c => c.id !== course.id));
+      } else {
+        setStudentCourses(prev => [...prev, course]);
+      }
+      return;
+    }
+
+    // In edit mode, save in real-time
     setTogglingCourseId(course.id);
     try {
       if (isEnrolled) {
@@ -172,7 +184,11 @@ const StudentForm = () => {
       if (isEdit) {
         await api.put(`/students/${id}`, formData);
       } else {
-        await api.post("/students", formData);
+        const payload = {
+          ...formData,
+          courseIds: studentCourses.map(c => c.id)
+        };
+        await api.post("/students", payload);
       }
       navigate("/students");
     } catch (err) {
@@ -290,9 +306,8 @@ const StudentForm = () => {
                 </div>
               </div>
 
-              {isEdit && (
-                <>
-                  <hr style={styles.divider} />
+              <>
+                <hr style={styles.divider} />
                   <div style={styles.sectionLabel}><span>Cursos asignados</span><div style={styles.sectionLabelLine} /></div>
                   <p style={{ color: "#6b7a87", fontSize: "0.88rem", marginTop: "-10px", marginBottom: "20px" }}>
                     Seleccioná los cursos a los que este alumno tiene permitido acceder. Hacé click sobre un curso para asignarlo o removerlo.
@@ -351,8 +366,7 @@ const StudentForm = () => {
                       })}
                     </div>
                   )}
-                </>
-              )}
+              </>
 
               {error && <div style={styles.errorBox}>{error}</div>}
               <hr style={styles.divider} />

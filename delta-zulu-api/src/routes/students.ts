@@ -42,7 +42,7 @@ export default async function studentRoutes(fastify: FastifyInstance) {
   fastify.post('/', { preHandler: [authenticate] }, async (request: any, reply) => {
     if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'No autorizado' });
 
-    const { nombre, apellido, email, password } = request.body;
+    const { nombre, apellido, email, password, courseIds } = request.body;
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const student = await fastify.prisma.user.create({
@@ -51,7 +51,10 @@ export default async function studentRoutes(fastify: FastifyInstance) {
           apellido,
           email,
           password: hashedPassword,
-          role: 'STUDENT'
+          role: 'STUDENT',
+          courses: courseIds && Array.isArray(courseIds) ? {
+            connect: courseIds.map((id: any) => ({ id: Number(id) }))
+          } : undefined
         }
       });
       return student;
